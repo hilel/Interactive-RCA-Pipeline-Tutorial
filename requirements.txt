@@ -1,0 +1,16 @@
+# Core Data Science Libraries
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Deep Learning Framework
+torch>=2.0.0
+
+# Data Validation and Schema Definition
+pydantic>=2.0.0
+
+# Optional: LLM Integration (Uncomment when ready to use real LLM)
+# outlines>=0.0.34
+
+# Web App
+streamlit>=1.24.0
+plotly>=5.15.0

@@ -2,6 +2,8 @@
 
 > **Learn Root Cause Analysis through hands-on experience with real-world data pipelines**
 
+**🌐 [Try the Live Demo](https://learn-rca-lstm.streamlit.app/)**
+
 An educational Streamlit application that demonstrates how modern AI systems automatically detect and diagnose failures in production environments by analyzing log data. Perfect for students, data engineers, and ML practitioners.
 
 ## 🎯 What You'll Learn

@@ -17,17 +17,17 @@ def render_step2():
     The `LogParserAgent.parse()` method uses regex patterns to extract structured information from messy logs:
     """)
     
-    code_snippet = '''def parse(self, raw_text: str) -> StructuredLogEvent:
+    code_snippet = r'''def parse(self, raw_text: str) -> StructuredLogEvent:
     # 1. Extract Timestamp: Look for [YYYY-MM-DD HH:MM:SS]
-    ts_match = re.search(r'\\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\\]', raw_text)
+    ts_match = re.search(r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]', raw_text)
     timestamp = ts_match.group(1) if ts_match else datetime.now().isoformat()
     
     # 2. Extract Event Name: Look for UseCase_... or Screen_...
-    event_match = re.search(r'(UseCase_\\w+|Screen_\\w+)', raw_text)
+    event_match = re.search(r'(UseCase_\w+|Screen_\w+)', raw_text)
     event_name = event_match.group(1) if event_match else "UnknownEvent"
     
     # 3. Extract Order ID: Handle multiple formats
-    order_match = re.search(r'Order #?(\\d+)|<Order>(\\d+)|order_id\\W+(\\d+)', raw_text)
+    order_match = re.search(r'Order #?(\d+)|<Order>(\d+)|order_id\W+(\d+)', raw_text)
     if order_match:
         order_id = int(next(g for g in order_match.groups() if g is not None))
     

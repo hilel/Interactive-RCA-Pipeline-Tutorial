@@ -2,12 +2,52 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from ui.educational_content import get_step6_education
+from steps.step6_explanation import render_step6_explanation
 
 def render_step6():
     st.header("Step 6: Analysis & Insights")
     
     with st.expander("📘 Learn More: Root Cause Analysis", expanded=True):
         st.markdown(get_step6_education(), unsafe_allow_html=True)
+    
+    # Code Example Section
+    st.markdown("### 💻 Code Implementation")
+    st.markdown("""
+    **Calculating Failure Statistics:**
+    
+    The analysis identifies where orders are failing by aggregating the last successful event:
+    """)
+    
+    code_snippet = '''def get_failure_stats(self, df_ready: pd.DataFrame) -> pd.DataFrame:
+    # 1. Filter for failed orders only (label == 0)
+    failed_orders = df_ready[df_ready['label'] == 0].copy()
+    
+    if failed_orders.empty:
+        return pd.DataFrame(columns=['Last Successful Step', 'Count', 'Percentage'])
+    
+    # 2. Extract the last event before failure
+    failed_orders['last_step'] = failed_orders['event_name'].apply(
+        lambda x: x[-1] if (isinstance(x, list) and len(x) > 0) else "UnknownEvent"
+    )
+    
+    # 3. Group by last step and count occurrences
+    breakdown = failed_orders['last_step'].value_counts().reset_index()
+    breakdown.columns = ['Last Successful Step', 'Count']
+    
+    # 4. Calculate percentage distribution
+    breakdown['Percentage'] = (breakdown['Count'] / len(failed_orders) * 100).round(1)
+    
+    return breakdown'''
+    
+    st.code(code_snippet, language='python')
+    
+    st.markdown("""
+    📁 **View Full Implementation:**
+    - <a href="https://github.com/hilel/Interactive-RCA-Pipeline-Tutorial/blob/main/pipeline/facade.py" target="_blank">pipeline/facade.py</a> - Failure analysis logic (lines 52-67)
+    """, unsafe_allow_html=True)
+    
+    # Technical Deep Dive
+    render_step6_explanation()
     
     # 1. Failure Analysis
     st.subheader("📊 Root Cause Aggregation")
